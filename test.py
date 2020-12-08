@@ -1,40 +1,28 @@
-# test_bucketlist.py
+# test_post.py
 import unittest
 import os
 import json
 from app import app, db
+from flask import Flask
+
 
 
 
 
 class SignupTest(unittest.TestCase):
+    # check if status is 200
+    def test_posts(self):
+        tester = app.test_client(self)
+        response = tester.get("/")
+        status_code = response.status_code
+        self.assertEqual(status_code, 200)
 
-    def setUp(self):
-        self.app.cofig[] = app.Post()
-        self.Post = db.get_db()
+    # checking for data returned
+    def test_index_data(self):
+        tester = app.test_client(self)
+        response = tester.get("/")
+        self.assertTrue(b'posts' in response.data)
 
-    def test_successful_creation(self):
-        # Given
-        payload = json.dumps({
-            "title": "my strange addiction",
-            "body": "im a mess my head id blowing up"
-        })
-
-        # When
-        response = self.app.post('/add-post', headers={"Content-Type": "application/json"}, data=payload)
-
-        # Then
-        self.assertEqual(str, type(response.json['id']))
-        self.assertEqual(200, response.status_code)
-
-
-
-    def tearDown(self):
-        """teardown all initialized variables."""
-        with self.app.app_context():
-            # drop all tables
-            db.session.remove()
-            db.drop_all()
 
 
 # Make the tests conveniently executable
